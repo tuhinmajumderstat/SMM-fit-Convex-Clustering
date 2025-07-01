@@ -12,3 +12,34 @@ Two major packages are installed from the CRAN archiv or other github repos - `c
   # install.packages("devtools")
   devtools::install_github("DataSlingers/clustRviz")
   ```
+- The other packages that need to be installed before running the scripts
+ ```{r}
+  packages <- c(
+  "gtools", 
+  "dplyr", 
+  "Matrix", 
+  "parallel", 
+  "ggplot2", 
+  "clues", 
+  "combinat", 
+  "fossil", 
+  "geometry", 
+  "gstat", 
+  "LaplacesDemon", 
+  "plyr", 
+  "sets", 
+  "spatstat", 
+  "stringr", 
+  "mclust"
+)
+
+# Install missing packages
+installed_packages <- rownames(installed.packages())
+for (pkg in packages) {
+  if (!(pkg %in% installed_packages)) {
+    install.packages(pkg)
+  }
+  require(pkg, character.only = TRUE)
+}
+
+  ```
