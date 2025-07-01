@@ -5,6 +5,8 @@ library(dplyr)
 library(Matrix)
 library(parallel)
 
+#### Some Functions ####
+
 find_index <- function(input,base)
 {
   m <- length(input)
@@ -39,8 +41,10 @@ create_partition <- function(p,g,min_size=2)
 
 #### Model 1: n=5000:25000, m=2 ####
 
-setwd("/cwork/tm389/JCGS_Revision")
+setwd("C://Users/tm389/OneDrive - Duke University/Desktop/Submitted Papers/SMM Fit/SMM-fit-Convex-Clustering")
+
 source("SMM_Fit_Other_Methods_Functions.R")
+
 ##   Number of states
 d <- 4   
 ## Order of SMM
@@ -134,19 +138,19 @@ for(n in 5000*c(1:5))
                          order = m, sigma = c("1","2","3","4"))
   
   print(paste0("Start DPMM:",n))
-  model1_dpmmassigned_5K = run_dpmm(model1_dat_5K, 1000, m, c("1","2","3","4"), 500, .1)
+  model1_dpmmassigned_5K = run_dpmm(model1_dat_5K, Repl, m, c("1","2","3","4"), 500, .1)
   saveRDS(model1_dpmmassigned_5K,paste0("JCGS_Model_1_dpmmassigned_m_2_n_",n,".rds"))
   
   print(paste0("Start Xiong:",n))
-  model1_xiongassigned_5K = run_xiong(model1_dat_5K, 1000, m, c("1","2","3","4"))
+  model1_xiongassigned_5K = run_xiong(model1_dat_5K, Repl, m, c("1","2","3","4"))
   saveRDS(model1_xiongassigned_5K,paste0("JCGS_Model_1_xiongassigned_m_2_n_",n,".rds"))
   
   print(paste0("Start GGL:",n))
-  model1_gglassigned_5K = run_ggl(model1_dat_5K, 1000, m, c("1","2","3","4"))
+  model1_gglassigned_5K = run_ggl(model1_dat_5K, Repl, m, c("1","2","3","4"))
   saveRDS(model1_gglassigned_5K ,paste0("JCGS_Model_1_gglassigned_m_2_n_",n,".rds"))
   
   print(paste0("Start Kmeans:",n))
-  model1_kmeansassigned_5K = run_kmeans(model1_dat_5K, 1000, m, c("1","2","3","4"))
+  model1_kmeansassigned_5K = run_kmeans(model1_dat_5K, Repl, m, c("1","2","3","4"))
   saveRDS(model1_kmeansassigned_5K,paste0("JCGS_Model_1_kmeansassigned_m_2_n_",n,".rds"))
   
   model1_correct_5K = correct_matrix(model1_dat_5K, Model1_JCGS)

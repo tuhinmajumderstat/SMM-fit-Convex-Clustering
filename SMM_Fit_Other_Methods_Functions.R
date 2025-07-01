@@ -11,7 +11,7 @@ library(spatstat)
 library(stringr)
 library(mclust)
 
-setwd("/cwork/tm389/JCGS_Revision")
+
 
 
 #### Set up SMM Object ####
