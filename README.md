@@ -43,3 +43,10 @@ for (pkg in packages) {
 }
 
   ```
+
+## File Description
+- The codes are saved in `/SMM-fit-Convex-Clustering/Codes`
+  - The simulation 1 codes are in `/SMM-fit-Convex-Clustering/Codes/Simulation 1`, including the convex clustering approach, other smm fitting approaches and the codes for generating the plots. To run `SMM_Simulation_1_Other_Methods.R`, please import the functions from `SMM_Fit_Other_Methods_Functions.R`.
+  - Similar notations go for Simulation 2 and Real Data Analysis.   
+- The raw datasets are saved in `/SMM-fit-Convex-Clustering/Data`.
+- Results for Simulation 1, Simulation 2 and Real Data analysis are stored in separate sub directories in `/SMM-fit-Convex-Clustering/Results`.
