@@ -1,0 +1,13 @@
+# -------- Multiple Linear Regression -------- 
+
+head(mtcars)
+
+## Run Model and Summary
+model <- lm(mpg ~ wt + hp, data = mtcars)
+summary(model)
+
+
+# -------- Logistic Regression -------- 
+
+model_logistic <- glm(vs ~ wt + hp, family="binomial", data=mtcars)
+summary(model_logistic)

@@ -8,7 +8,7 @@ aggregate_df$missclassification <- 0
 aggregate_df$method <- "CVX"
 for(i in 1:3)
 {
-  err <- 1-sum(diag(readRDS(paste0("Results/Results-Real Data/Confusion Matrices/Convex Clustering Approach/Confusion_Matrix_",percents[i],"_Percent_model_1.rds"))))/500
+  err <- 1-sum(diag(readRDS(paste0("Results-Real Data/Confusion Matrices/Convex Clustering Approach/Confusion_Matrix_",percents[i],"_Percent_model_1.rds"))))/500
   aggregate_df$missclassification[i] = err
 }
 
@@ -24,7 +24,7 @@ for(method in compared_methods)
   
   for(i in 1:3)
   {
-    err <- 1-sum(diag(readRDS(paste0("Results/Results-Real Data/Confusion Matrices/Compared Methods/Confusion_MX_",percents[i],"_model_1_method_",method,".rds"))))/500
+    err <- 1-sum(diag(readRDS(paste0("Results-Real Data/Confusion Matrices/Compared Methods/Confusion_MX_",percents[i],"_model_1_method_",method,".rds"))))/500
     summary_df$missclassification[i]=err
   }
   aggregate_df <- rbind(aggregate_df,summary_df)
@@ -132,7 +132,7 @@ aggregate_df$missclassification <- 0
 aggregate_df$method <- "CVX"
 for(i in 1:3)
 {
-  err <- 1-sum(diag(readRDS(paste0("Results/Results-Real Data/Confusion Matrices/Convex Clustering Approach/Confusion_Matrix_",percents[i],"_Percent_model_4.rds"))))/500
+  err <- 1-sum(diag(readRDS(paste0("Results-Real Data/Confusion Matrices/Convex Clustering Approach/Confusion_Matrix_",percents[i],"_Percent_model_4.rds"))))/500
   aggregate_df$missclassification[i] = err
 }
 
@@ -148,7 +148,7 @@ for(method in compared_methods)
   
   for(i in 1:3)
   {
-    err <- 1-sum(diag(readRDS(paste0("Results/Results-Real Data/Confusion Matrices/Compared Methods/Confusion_MX_",percents[i],"_model_2_method_",method,".rds"))))/500
+    err <- 1-sum(diag(readRDS(paste0("Results-Real Data/Confusion Matrices/Compared Methods/Confusion_MX_",percents[i],"_model_2_method_",method,".rds"))))/500
     summary_df$missclassification[i]=err
   }
   aggregate_df <- rbind(aggregate_df,summary_df)

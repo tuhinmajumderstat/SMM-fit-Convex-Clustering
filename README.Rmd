@@ -8,17 +8,17 @@ output:
 ## Dependencies
 Two major packages are installed from the CRAN archiv or other github repos - `cvxclustr` for convex clustering and `clustRviz` for applying Weylandt's pathwise technique.
 - Install `cvxclustr` using the following command
-  ```{r}
+  ```{r,eval=FALSE}
   install.packages("https://cran.r-project.org/src/contrib/Archive/cvxclustr/cvxclustr_1.1.1.tar.gz", repos = NULL, type = "source")
   ```
   If there is an error, you can manually download the `cvxclustr_1.1.1.tar.gz` file locally from this [link](https://cran.r-project.org/src/contrib/Archive/cvxclustr/) and install in R. `Rtools` is needed to run this package.
 - Install `clustRviz` using
-  ```{r}
+  ```{r,eval=FALSE}
   # install.packages("devtools")
   devtools::install_github("DataSlingers/clustRviz")
   ```
 - The other packages that need to be installed before running the scripts
- ```{r}
+ ```{r,eval=FALSE}
   packages <- c(
   "gtools", 
   "dplyr", 
@@ -46,5 +46,12 @@ for (pkg in packages) {
   }
   require(pkg, character.only = TRUE)
 }
-
   ```
+
+## File Description
+- The codes are saved in `/SMM-fit-Convex-Clustering/Codes`
+  - The simulation 1 codes are in `/SMM-fit-Convex-Clustering/Codes/Simulation 1`, including the convex clustering approach, other smm fitting approaches and the codes for generating the plots. To run `SMM_Simulation_1_Other_Methods.R`, please import the functions from `SMM_Fit_Other_Methods_Functions.R`.
+  - Similar notations go for Simulation 2 and Real Data Analysis.   
+  - The script `Get ample Seq.R` in `/SMM-fit-Convex-Clustering/Codes/Real Data Analysis` is used to sample some full genome sequences from the set of all sequences for each disease. You do not need to run this code, this is provided to show how test data are sampled.
+- The raw datasets are saved in `/SMM-fit-Convex-Clustering/Data`.
+- Results for Simulation 1, Simulation 2 and Real Data analysis are stored in separate sub directories in `/SMM-fit-Convex-Clustering/Results`.

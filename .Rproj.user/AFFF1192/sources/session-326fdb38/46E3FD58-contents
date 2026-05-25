@@ -39,24 +39,31 @@ create_partition <- function(p,g,min_size=2)
 
 
 
-#### Model 2: n=1000, 2000, m=3 ####
+#### Model 1: n=5000:25000, m=2 ####
 
-source("Codes/Utils/SMM_Fit_Other_Methods_Functions.R")
+setwd("C://Users/tm389/OneDrive - Duke University/Desktop/Submitted Papers/SMM Fit/SMM-fit-Convex-Clustering")
 
-d <- 4
-m <- 3
-p <- d^m
+source("SMM_Fit_Other_Methods_Functions.R")
+
+##   Number of states
+d <- 4   
+## Order of SMM
+m <- 2   
+## Number of m-tuples
+p <- d^m 
 
 all_comb <- expand.grid(rep(list(1:d), m))
 
-g <- 4
+## Number of partitions
+g <- sqrt(p)
 groups <- c(1:g)
-set.seed(23456)
-nums <- create_partition(p=p,g=g,min_size = 10)
+set.seed(12345)
+nums <- create_partition(p=p,g=g,min_size = g)
 nums
 assignments <- rep(NA, p)
 assignments[sample(p)] <- rep(c(1:g), nums)
 group_id <- assignments
+
 
 true_adjacency <- Matrix(0, nrow = p, ncol = p, sparse = TRUE)
 for(i in 1:g)
@@ -78,17 +85,25 @@ for(i in 1:g)
 }
 
 
-R <- matrix(0.1,ncol=d,nrow=g)
-diag(R) <- 0.7
+set.seed(23456)
+Z <- matrix(runif(g*d),nrow=g,ncol=d)
+weights <- exp(Z)
 
-
-
-Repl <- 1000
-
-
-for(n in 1000*c(1:2))
+R <- matrix(0,g,d,byrow=TRUE)
+for(i in 1:g)
 {
-  model2_dat_1K <- matrix(0,nrow=Repl,ncol=n)
+  R[i,] <- rdirichlet (1,weights[i,])
+}
+R
+
+
+
+Repl=1000
+
+
+for(n in 5000*c(1:5))
+{
+  model1_dat_5K <- matrix(0,nrow=Repl,ncol=n)
   for(iter in 1:Repl)
   {
     d <- ncol(R)
@@ -104,10 +119,10 @@ for(n in 1000*c(1:2))
       grp_ind <- which(groups==group_id[prev_ind])
       chain[i] <- sample(c(1:d),1,prob=R[grp_ind,])
     }
-    model2_dat_1K[iter,]=chain
+    model1_dat_5K[iter,]=chain
   }
   
-  model2_dat_1K <- apply(model2_dat_1K, 1, function(x) paste(x, collapse = ""))
+  model1_dat_5K <- apply(model1_dat_5K, 1, function(x) paste(x, collapse = ""))
   
   
   # Step 1: Convert triplets in all_comb to strings
@@ -118,28 +133,30 @@ for(n in 1000*c(1:2))
   names(subset_belong_new) <- triplet_strings
   
   
-  model2_JCGS <- SMM$new(subset_belong= subset_belong_new,
+  Model1_JCGS <- SMM$new(subset_belong= subset_belong_new,
                          subset_probs = R,
                          order = m, sigma = c("1","2","3","4"))
   
   print(paste0("Start DPMM:",n))
-  model2_dpmmassigned_1K = run_dpmm(model2_dat_1K, 1000, 3, c("1","2","3","4"), 500, .1)
-  saveRDS(model2_dpmmassigned_1K,paste0("JCGS_Model_2_dpmmassigned_n_",n,".rds"))
+  model1_dpmmassigned_5K = run_dpmm(model1_dat_5K, Repl, m, c("1","2","3","4"), 500, .1)
+  saveRDS(model1_dpmmassigned_5K,paste0("JCGS_Model_1_dpmmassigned_m_2_n_",n,".rds"))
   
   print(paste0("Start Xiong:",n))
-  model2_xiongassigned_1K = run_xiong(model2_dat_1K, 1000, 3, c("1","2","3","4"))
-  saveRDS(model2_xiongassigned_1K,paste0("JCGS_Model_2_xiongassigned_n_",n,".rds"))
+  model1_xiongassigned_5K = run_xiong(model1_dat_5K, Repl, m, c("1","2","3","4"))
+  saveRDS(model1_xiongassigned_5K,paste0("JCGS_Model_1_xiongassigned_m_2_n_",n,".rds"))
   
   print(paste0("Start GGL:",n))
-  model2_gglassigned_1K = run_ggl(model2_dat_1K, 1000, 3, c("1","2","3","4"))
-  saveRDS(model2_gglassigned_1K ,paste0("JCGS_Model_2_gglassigned_n_",n,".rds"))
+  model1_gglassigned_5K = run_ggl(model1_dat_5K, Repl, m, c("1","2","3","4"))
+  saveRDS(model1_gglassigned_5K ,paste0("JCGS_Model_1_gglassigned_m_2_n_",n,".rds"))
   
   print(paste0("Start Kmeans:",n))
-  model2_kmeansassigned_1K = run_kmeans(model2_dat_1K, 1000, 3, c("1","2","3","4"))
-  saveRDS(model2_kmeansassigned_1K,paste0("JCGS_Model_2_kmeansassigned_n_",n,".rds"))
+  model1_kmeansassigned_5K = run_kmeans(model1_dat_5K, Repl, m, c("1","2","3","4"))
+  saveRDS(model1_kmeansassigned_5K,paste0("JCGS_Model_1_kmeansassigned_m_2_n_",n,".rds"))
   
-  model2_correct_1K = correct_matrix(model2_dat_1K, model2_JCGS)
-  saveRDS(model2_correct_1K,paste0("JCGS_Model_2_correct_model_n_",n,".rds"))
+  model1_correct_5K = correct_matrix(model1_dat_5K, Model1_JCGS)
+  saveRDS(model1_correct_5K,paste0("JCGS_Model_1_correct_model_m_2_n_",n,".rds"))
   
   print(paste0("Completed All:",n))
 }
+
+
