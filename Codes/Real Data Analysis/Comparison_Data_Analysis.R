@@ -121,6 +121,14 @@ p_model1 <- ggplot(plot1_df, aes(x = percent, y = 100*missclassification, color 
 p_model1
 ggsave("Figures/plot_missclassification_model_1.jpeg",p_model1,height=4.5,width=5.6,dpi=1200)
 
+outdir_mc <- "Results/Results-Real Data/Misclassifications"
+
+if (!dir.exists(outdir_mc)) {
+  dir.create(outdir_mc, recursive = TRUE)
+}
+
+saveRDS(plot1_df,paste0(outdir_mc,"/model_1_misclassification.rds"))
+
 
 #### Model 2 ####
 
@@ -213,6 +221,8 @@ p_model2 <- ggplot(plot2_df, aes(x = percent, y = 100*missclassification, color 
 
 p_model2
 
+saveRDS(plot2_df,paste0(outdir_mc,"/model_2_misclassification.rds"))
 
 ggsave("Figures/plot_missclassification_model_2.jpeg",p_model2,height=4.5,width=5.6,dpi=1200)
+
 
